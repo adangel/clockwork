@@ -109,9 +109,10 @@ function parseLocationHash() {
             return;
         }
         try {
-            var zoneinfo = timezoneJS.timezone.getTzInfo(new Date().valueOf(), data[1], true);
+            var zone = decodeURI(data[1]),
+                zoneinfo = timezoneJS.timezone.getTzInfo(new Date().valueOf(), zone, true);
             if (zoneinfo) {
-                addNewClock(data[0], data[1], data[2]);
+                addNewClock(decodeURI(data[0]), zone, decodeURI(data[2]));
             }
         } catch (e) {
             console.log("invalid data: " + inclocks[i] + " " + e);
