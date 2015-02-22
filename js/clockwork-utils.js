@@ -42,7 +42,7 @@
             minutes: d.getMinutes(),
             seconds: d.getSeconds(),
             additions: additions
-        }
+        };
     };
 
 })();

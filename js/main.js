@@ -51,7 +51,7 @@ function bindEventListeners() {
         parseLocationHash();
     });
 
-    var intervalId;
+    var intervalId = null;
     $(window).focus(function() {
         function updateAll() {
             $.each(clocks, function(index, value) {
@@ -62,7 +62,10 @@ function bindEventListeners() {
         intervalId = window.setInterval(updateAll, 1000);
     });
     $(window).blur(function() {
-        window.clearInterval(intervalId);
+        if (intervalId !== null) {
+            window.clearInterval(intervalId);
+            intervalId = null;
+        }
     });
 }
 function renderSelectBoxes() {
@@ -85,7 +88,7 @@ function clearAllClocks() {
     clocks = [];
 }
 function syncLocationHash() {
-    var hash = "", i;
+    var hash = "";
     $.each(clocks, function(index, clock) {
         hash += clock.clockstyle + "," + clock.zone + "," + clock.title + "|";
     });
@@ -128,8 +131,7 @@ function addNewClock(style, timezone, title) {
     $("#clocks").append(newclock);
 
     var rows = clocks.length / 5.0,
-        newWidth = 100.0 / clocks.length * rows - 1,
-        newWidth = window.innerWidth * newWidth / 100.0,
+        newWidth = window.innerWidth / clocks.length * rows - 20,
         maxHeight = window.innerHeight / rows - 20;
     if (newWidth > maxHeight) newWidth = maxHeight;
     $.each(clocks, function(index, value) {

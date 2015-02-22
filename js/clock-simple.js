@@ -16,7 +16,7 @@
                 clockGroup.appendChild(svgElement("circle", {'cx': 250, 'cy': 250, 'r': 200, 'stroke': '#000', 'stroke-width': 4, 'fill-opacity': 0}));
                 for (i = 0, j = 12; i < 360; i+= 30, j++) {
                     group1.appendChild(svgElement("line", {'x1':0, 'y1':-150, 'x2':0, 'y2':-200, 'stroke':'black', 'stroke-width':3, 'transform':'rotate(' + i + ')'}));
-                    if (j > 12) { j -= 12 };
+                    if (j > 12) { j -= 12; }
                     if (j >= 4 && j <= 8) {
                         group1.appendChild(svgElement("text", {'x':0, 'y':-220, 'transform':'rotate('+ i +') rotate(180 0 -220)'}, j));
                     } else {
@@ -59,7 +59,7 @@
                 }
                 function update(hours, minutes, seconds, additions) {
                     utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions);
-                    if (hours > 12) { hours -= 12 };
+                    if (hours > 12) { hours -= 12; }
                     hourHandle.setAttribute("transform", "rotate(" + (360.0/12 * (hours + minutes/60.0 + seconds/3600.0)) + ")");
                     minuteHandle.setAttribute("transform", "rotate(" + (360.0/60 * (minutes + seconds/60.0)) + ")");
                     secondHandle.setAttribute("transform", "rotate(" + (360/60 * seconds) + ")");
