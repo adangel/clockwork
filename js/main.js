@@ -1,6 +1,9 @@
 (function() {
 
 var DEFAULT_CLOCK_STYLE = "svgjs",
+    CLOCK_DELIMITER = ";",
+    CLOCK_ALT_DELIMITER = "|",
+    DELIMITER = ",",
     clocks = [];
 
 $(document).ready(function() {
@@ -97,7 +100,10 @@ function clearAllClocks() {
 function syncLocationHash() {
     var hash = "";
     $.each(clocks, function(index, clock) {
-        hash += clock.clockstyle + "," + clock.zone + "," + clock.title + "|";
+        hash += clock.clockstyle + DELIMITER + clock.zone + DELIMITER + clock.title;
+        if (index < clocks.length - 1) {
+            hash += CLOCK_DELIMITER;
+        }
     });
     syncLocationHash.lastHash = "#" + hash;
     location.hash = syncLocationHash.lastHash;
@@ -108,21 +114,28 @@ function parseLocationHash() {
     }
 
     clearAllClocks();
+
     var hash = location.hash, inclocks;
     if (hash.substring(0, 1) === '#') {
         hash = hash.substr(1);
     }
-    inclocks = hash.split('|');
+    hash = decodeURI(hash);
+
+    if (hash.indexOf(CLOCK_ALT_DELIMITER) > -1) {
+        inclocks = hash.split(CLOCK_ALT_DELIMITER); // for backward compatibility
+    } else {
+        inclocks = hash.split(CLOCK_DELIMITER);
+    }
     $.each(inclocks, function(index, value) {
-        var data = value.split(',');
+        var data = value.split(DELIMITER);
         if (data[0] === '' || data.length !== 3) {
             return;
         }
         try {
-            var zone = decodeURI(data[1]),
+            var zone = data[1],
                 zoneinfo = timezoneJS.timezone.getTzInfo(new Date().valueOf(), zone, true);
             if (zoneinfo) {
-                addNewClock(decodeURI(data[0]), zone, decodeURI(data[2]));
+                addNewClock(data[0], zone, data[2]);
             }
         } catch (e) {
             console.log("invalid data: " + inclocks[i] + " " + e);
@@ -132,6 +145,9 @@ function parseLocationHash() {
 }
 function addNewClock(style, timezone, title) {
     if (!clockwork.clocks[style]) { style = DEFAULT_CLOCK_STYLE; }
+    style = removeAllDelimiters(style);
+    timezone = removeAllDelimiters(timezone);
+    title = removeAllDelimiters(title);
 
     var newclock = clockwork.clocks[style].fn(timezone, title);
     clocks.push(newclock);
@@ -144,5 +160,10 @@ function addNewClock(style, timezone, title) {
     $.each(clocks, function(index, value) {
         value.setSize(newWidth);
     });
+}
+function removeAllDelimiters(s) {
+    var re = new RegExp("\\" + DELIMITER + "|" + "\\" + CLOCK_DELIMITER + "|" + "\\" + CLOCK_ALT_DELIMITER, "g");
+    s = s.replace(re, " ");
+    return s;
 }
 })();
