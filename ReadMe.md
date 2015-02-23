@@ -16,4 +16,6 @@ will display two clocks.
 
 ## Try it out
 
-<https://adangel.github.io/clockwork>
+* <https://adangel.github.io/clockwork> - this will show the default clocks
+* <https://adangel.github.io/clockwork/#svgjs,Europe/Paris,Paris> - Paris
+

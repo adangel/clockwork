@@ -84,6 +84,8 @@ function renderSelectBoxes() {
 }
 function restoreDefaultClocks() {
     addNewClock(DEFAULT_CLOCK_STYLE, "Europe/Berlin", "Berlin");
+    addNewClock(DEFAULT_CLOCK_STYLE, "America/New_York", "New York");
+    addNewClock(DEFAULT_CLOCK_STYLE, "Asia/Tokyo", "Tokyo");
     syncLocationHash();
 }
 function clearAllClocks() {
