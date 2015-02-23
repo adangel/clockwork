@@ -51,22 +51,27 @@ function bindEventListeners() {
         parseLocationHash();
     });
 
-    var intervalId = null;
-    $(window).focus(function() {
-        function updateAll() {
-            $.each(clocks, function(index, value) {
-                value.update();
-            });
-        }
-        updateAll();
-        intervalId = window.setInterval(updateAll, 1000);
-    });
-    $(window).blur(function() {
-        if (intervalId !== null) {
-            window.clearInterval(intervalId);
-            intervalId = null;
-        }
-    });
+    var intervalId = null,
+        unregisterRefreshInterval = function() {
+            if (intervalId !== null) {
+                window.clearInterval(intervalId);
+                intervalId = null;
+            }
+        },
+        registerRefreshInterval = function() {
+            function updateAll() {
+                $.each(clocks, function(index, value) {
+                    value.update();
+                });
+            }
+            updateAll();
+            unregisterRefreshInterval();
+            intervalId = window.setInterval(updateAll, 1000);
+        };
+    $(window).focus(registerRefreshInterval);
+    $(window).blur(unregisterRefreshInterval);
+    // register once
+    registerRefreshInterval();
 }
 function renderSelectBoxes() {
     $.each(timezoneJS.timezone.getAllZones(), function(index, value) {
