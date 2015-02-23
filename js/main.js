@@ -129,7 +129,7 @@ function parseLocationHash() {
     syncLocationHash();
 }
 function addNewClock(style, timezone, title) {
-    if (!clockwork.clocks[style]) { style = DEFAULT_CLOCK_STYLE; };
+    if (!clockwork.clocks[style]) { style = DEFAULT_CLOCK_STYLE; }
 
     var newclock = clockwork.clocks[style].fn(timezone, title);
     clocks.push(newclock);

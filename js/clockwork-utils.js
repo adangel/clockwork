@@ -6,9 +6,8 @@
     utils.leadingZero = function (n) {
         if (n < 10) {
             return "0" + n;
-        } else {
-            return "" + n;
         }
+        return "" + n;
     };
     utils.createClockSubtitleNode = function(title, zone) {
         var text = document.createElement("span"),
