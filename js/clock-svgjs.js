@@ -9,7 +9,7 @@
             fn: function(zone, title) {
                 var main = document.createElement("div"),
                     text = utils.createClockSubtitleNode(title, zone),
-                    svg = SVG(main).size(400, 400),
+                    svg = SVG(main).size('100%', '100%'),
                     clock = svg.clock('100%');
 
                 main.appendChild(text);
@@ -24,7 +24,6 @@
                 main.setSize = function(w) {
                     main.style.width = w + "px";
                     main.style.height = w + "px";
-                    svg.size(w - 20, w - 20);
                 };
 
                 return main;

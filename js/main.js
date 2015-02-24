@@ -148,6 +148,8 @@ function addNewClock(style, timezone, title) {
     title = removeAllDelimiters(title);
 
     var newclock = clockwork.clocks[style].fn(timezone, title);
+    $(newclock).draggable();
+    $(newclock).resizable();
     $("#clocks").append(newclock);
 
     var clocks = $('#clocks > div'),
