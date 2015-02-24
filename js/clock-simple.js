@@ -55,10 +55,10 @@
     
                 function updateCurrent() {
                     var current = utils.getCurrentTime(zone);
-                    update(current.hours, current.minutes, current.seconds, current.additions);
+                    update(current.hours, current.minutes, current.seconds, current.additions, current.date);
                 }
-                function update(hours, minutes, seconds, additions) {
-                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions);
+                function update(hours, minutes, seconds, additions, date) {
+                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date);
                     if (hours > 12) { hours -= 12; }
                     hourHandle.setAttribute("transform", "rotate(" + (360.0/12 * (hours + minutes/60.0 + seconds/3600.0)) + ")");
                     minuteHandle.setAttribute("transform", "rotate(" + (360.0/60 * (minutes + seconds/60.0)) + ")");

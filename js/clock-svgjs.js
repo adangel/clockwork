@@ -30,11 +30,11 @@
 
                 function updateCurrent() {
                     var current = utils.getCurrentTime(zone);
-                    update(current.hours, current.minutes, current.seconds, current.additions);
+                    update(current.hours, current.minutes, current.seconds, current.additions, current.date);
                 }
-                function update(hours, minutes, seconds, additions) {
+                function update(hours, minutes, seconds, additions, date) {
                     var duration = 300;
-                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions);
+                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date);
                     clock.setHours(hours, minutes);
                     clock.setMinutes(minutes, duration);
                     clock.setSeconds(seconds, duration);
