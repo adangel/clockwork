@@ -3,8 +3,7 @@
 var DEFAULT_CLOCK_STYLE = "svgjs",
     CLOCK_DELIMITER = ";",
     CLOCK_ALT_DELIMITER = "|",
-    DELIMITER = ",",
-    clocks = [];
+    DELIMITER = ",";
 
 $(document).ready(function() {
     initTimezoneJS();
@@ -63,7 +62,7 @@ function bindEventListeners() {
         },
         registerRefreshInterval = function() {
             function updateAll() {
-                $.each(clocks, function(index, value) {
+                $('#clocks > div').each(function(index, value) {
                     value.update();
                 });
             }
@@ -92,19 +91,18 @@ function restoreDefaultClocks() {
     syncLocationHash();
 }
 function clearAllClocks() {
-    $.each(clocks, function(index, value) {
+    $('#clocks > div').each(function(index, value) {
         value.remove();
     });
-    clocks = [];
 }
 function syncLocationHash() {
     var hash = "";
-    $.each(clocks, function(index, clock) {
+
+    $('#clocks > div').each(function(index, clock) {
         hash += clock.clockstyle + DELIMITER + clock.zone + DELIMITER + clock.title;
-        if (index < clocks.length - 1) {
-            hash += CLOCK_DELIMITER;
-        }
+        hash += CLOCK_DELIMITER;
     });
+    hash = hash.substring(0, hash.length - CLOCK_DELIMITER.length); // remove last CLOCK_DELIMITER
     syncLocationHash.lastHash = "#" + hash;
     location.hash = syncLocationHash.lastHash;
 }
@@ -150,14 +148,14 @@ function addNewClock(style, timezone, title) {
     title = removeAllDelimiters(title);
 
     var newclock = clockwork.clocks[style].fn(timezone, title);
-    clocks.push(newclock);
     $("#clocks").append(newclock);
 
-    var rows = clocks.length / 5.0,
+    var clocks = $('#clocks > div'),
+        rows = clocks.length / 5.0,
         newWidth = window.innerWidth / clocks.length * rows - 20,
         maxHeight = window.innerHeight / rows - 20;
     if (newWidth > maxHeight) newWidth = maxHeight;
-    $.each(clocks, function(index, value) {
+    clocks.each(function(index, value) {
         value.setSize(newWidth);
     });
 }
