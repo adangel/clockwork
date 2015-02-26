@@ -52,6 +52,7 @@ function bindEventListeners() {
     $(window).on('hashchange', function() {
         parseLocationHash();
     });
+    $(window).resize(resize);
 
     var intervalId = null,
         unregisterRefreshInterval = function() {
@@ -151,7 +152,9 @@ function addNewClock(style, timezone, title) {
     $(newclock).draggable();
     $(newclock).resizable();
     $("#clocks").append(newclock);
-
+    resize();
+}
+function resize() {
     var clocks = $('#clocks > div'),
         rows = clocks.length / 5.0,
         newWidth = window.innerWidth / clocks.length * rows - 20,
