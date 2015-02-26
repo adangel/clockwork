@@ -7,7 +7,7 @@ var DEFAULT_CLOCK_STYLE = "svgjs",
 
 $(document).ready(function() {
     initTimezoneJS();
-    renderSelectBoxes();
+    render();
     bindEventListeners();
 
     if (location.hash.length > 1) {
@@ -29,10 +29,7 @@ function initTimezoneJS() {
 }
 function bindEventListeners() {
     $("#config-button").click(function() {
-        $("#config").fadeIn();
-    });
-    $("#config button.close").click(function() {
-        $("#config").fadeOut();
+        $("#config").dialog("open");
     });
     $("#config button.clear").click(function() {
         clearAllClocks();
@@ -76,14 +73,26 @@ function bindEventListeners() {
     // register once
     registerRefreshInterval();
 }
-function renderSelectBoxes() {
-    $.each(timezoneJS.timezone.getAllZones(), function(index, value) {
-        $("#config select[name='timezone']").append("<option value='" + value + "'>" + value + "</option>");
+function render() {
+    $("#config-button").button();
+    $("#config button.clear").button();
+    $("#config button.default").button();
+    $("#config button.add").button();
+    $("#config > div.tabs").tabs();
+    $("#config").dialog({
+        autoOpen: false,
+        width: 400
     });
+
+    $.each(timezoneJS.timezone.getAllZones(), function(index, value) {
+        $("#timezone-select").append("<option value='" + value + "'>" + value + "</option>");
+    });
+    $("#timezone-select").selectmenu();
     $.each(clockwork.clocks, function(key, value) {
         var checked = key === DEFAULT_CLOCK_STYLE ? " checked='checked'" : "";
-        $("#config select[name='style']").append("<option value='" + key + "'" + checked + ">" + value.label + "</option>");
+        $("#clockstyle-select").append("<option value='" + key + "'" + checked + ">" + value.label + "</option>");
     });
+    $("#clockstyle-select").selectmenu();
 }
 function restoreDefaultClocks() {
     addNewClock(DEFAULT_CLOCK_STYLE, "Europe/Berlin", "Berlin");

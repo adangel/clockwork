@@ -28,35 +28,26 @@
     font-size: 80%;
     text-align: center;
 }
-#config {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border: 1px black solid;
-    background-color: lightyellow;
-    padding: 10px;
-    width: 400px;
-}
 #config-button {
     position: absolute;
     right: 20px;
     top: 20px;
-    font-size: 200%;
 }
 #config-button:hover {
     background: yellow;
     border: 1px black solid;
     cursor: pointer;
 }
-.row, .row div {
-    height: 30px;
+#config .tabs {
+    margin-bottom: 10px;
 }
-.left {
-    float: left;
+fieldset {
+    border: 0;
 }
-.col1 {
-    width: 100px;
+label {
+    display: block;
+    margin: 10px 0 0 0;
 }
-.col2, .col2 input, .col2 select {
-    width: 300px;
+select {
+    width: 200px;
 }

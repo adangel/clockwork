@@ -21,29 +21,29 @@
 </head>
 <body>
 <div id="config-button">&#9776;</div>
-<div id="config" style="display: none;">
-    <h2>Add a clock</h2>
-    <div>
-        <div class="row">
-            <div class="left col1">Timezone:</div>
-            <div class="left col2"><select name="timezone" id="timezone-select"></select></div>
+<div id="config" style="display: none;" title="Configuration">
+    <div class="tabs">
+        <ul>
+            <li><a href="#tab-add">Add a clock</a></li>
+        </ul>
+        <div id="tab-add">
+            <fieldset>
+                <label for="timezone-select">Timezone:</label>
+                <select name="timezone" id="timezone-select"></select>
+
+                <label for="clock-title">Clock Title</label>
+                <input name="title" id="clock-title" type="text" />
+
+                <label for="clockstyle-select">Style:</label>
+                <select name="style" id="clockstyle-select"></select>
+            </fieldset>
+
+            <button class="add">Add</button>
         </div>
-        <div class="row">
-            <div class="left col1">Clock Title:</div>
-            <div class="left col2"><input name="title" type="text" /></div>
-        </div>
-        <div class="row">
-            <div class="left col">Style:</div>
-            <div class="left col2"><select name="style" id="clockstyle-select"></select></div>
-        </div>
-        <br clear="all" />
-        <button class="add">Add</button>
     </div>
-    <hr />
     <div>
         <button class="clear">Clear</button>
         <button class="default">Restore Default</button>
-        <button class="close">Close</button>
     </div>
 </div>
 <div id="clocks"></div>
