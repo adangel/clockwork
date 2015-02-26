@@ -20,33 +20,43 @@
      <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
+<div id="clocks"></div>
 <div id="config-button">&#9776;</div>
 <div id="config" style="display: none;" title="Configuration">
     <div class="tabs">
         <ul>
-            <li><a href="#tab-add">Add a clock</a></li>
+            <li><a href="#tab-clocks">Clocks</a></li>
+            <li><a href="#tab-view">View configuration</a></li>
         </ul>
-        <div id="tab-add">
+        <div id="tab-clocks">
             <fieldset>
-                <label for="timezone-select">Timezone:</label>
-                <select name="timezone" id="timezone-select"></select>
+                <button class="add">Add a clock</button>
 
-                <label for="clock-title">Clock Title</label>
-                <input name="title" id="clock-title" type="text" />
+                <fieldset>
+                    <label for="timezone-select">Timezone:</label>
+                    <select name="timezone" id="timezone-select"></select>
 
-                <label for="clockstyle-select">Style:</label>
-                <select name="style" id="clockstyle-select"></select>
+                    <label for="clock-title">Clock Title</label>
+                    <input name="title" id="clock-title" type="text" />
+
+                    <label for="clockstyle-select">Style:</label>
+                    <select name="style" id="clockstyle-select"></select>
+                </fieldset>
             </fieldset>
 
-            <button class="add">Add</button>
+            <fieldset>
+                <button class="clear">Clear</button>
+                <button class="default">Restore Default</button>
+            </fieldset>
+        </div>
+        <div id="tab-view">
+            <fieldset>
+                <label for="clocks-per-row">Clocks per row:</label>
+                <input id="clocks-per-row" type="number" />
+            </fieldset>
         </div>
     </div>
-    <div>
-        <button class="clear">Clear</button>
-        <button class="default">Restore Default</button>
-    </div>
 </div>
-<div id="clocks"></div>
 <div id="footer"><a href="https://github.com/adangel/clockwork">https://github.com/adangel/clockwork</a></div>
 </body>
 </html>

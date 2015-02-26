@@ -38,9 +38,6 @@
     border: 1px black solid;
     cursor: pointer;
 }
-#config .tabs {
-    margin-bottom: 10px;
-}
 fieldset {
     border: 0;
 }

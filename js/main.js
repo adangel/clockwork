@@ -1,6 +1,7 @@
 (function() {
 
 var DEFAULT_CLOCK_STYLE = "svgjs",
+    DEFAULT_CLOCKS_PER_ROW = 5,
     CLOCK_DELIMITER = ";",
     CLOCK_ALT_DELIMITER = "|",
     DELIMITER = ",";
@@ -46,6 +47,8 @@ function bindEventListeners() {
         addNewClock(style, tz, title);
         syncLocationHash();
     });
+    $("#clocks-per-row").val(DEFAULT_CLOCKS_PER_ROW);
+    $("#clocks-per-row").change(resize);
     $(window).on('hashchange', function() {
         parseLocationHash();
     });
@@ -146,7 +149,7 @@ function parseLocationHash() {
                 addNewClock(data[0], zone, data[2]);
             }
         } catch (e) {
-            console.log("invalid data: " + inclocks[i] + " " + e);
+            console.log("invalid data: " + value + " " + e);
         }
     });
     syncLocationHash();
@@ -163,12 +166,14 @@ function addNewClock(style, timezone, title) {
     $("#clocks").append(newclock);
     resize();
 }
-function resize() {
+function resize(event) {
+    if (event && $(event.target).hasClass("ui-resizable")) {
+        return;
+    }
+
     var clocks = $('#clocks > div'),
-        rows = clocks.length / 5.0,
-        newWidth = window.innerWidth / clocks.length * rows - 20,
-        maxHeight = window.innerHeight / rows - 20;
-    if (newWidth > maxHeight) newWidth = maxHeight;
+        rows = clocks.length / $("#clocks-per-row").val(),
+        newWidth = window.innerWidth / clocks.length * rows - 20;
     clocks.each(function(index, value) {
         value.setSize(newWidth);
     });
