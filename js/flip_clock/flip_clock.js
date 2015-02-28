@@ -19,7 +19,7 @@ var IMG_HEIGHT = 451,
 	
 function clearCanvas() {
 	 // clear canvas
-	ctx.clearRect(0, 0, IMG_WIDTH, IMG_HEIGHT);
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
 function pad2(number) {

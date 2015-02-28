@@ -186,7 +186,7 @@ function addNewClock(style, timezone, title) {
     timezone = removeAllDelimiters(timezone);
     title = removeAllDelimiters(title);
 
-    var newclock = clockwork.clocks[style].fn(timezone, title);
+    var newclock = clockwork.clocks[style].fn(timezone, title, $("#show-seconds:checked").val() === "on");
     $(newclock).draggable();
     $(newclock).resizable();
     $("#clocks").append(newclock);
