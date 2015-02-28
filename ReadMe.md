@@ -13,11 +13,11 @@ It uses:
 * Flip Clock from <https://github.com/rheh/HTML5-canvas-projects/tree/master/flip_clock>
 
 It supports bookmarks and a simple configuration interface. E.g.:
-<http://adangel.github.io/clockwork/#svgjs,Europe/Berlin,Berlin|svgjs,America/New_York,New York|>
+<http://adangel.github.io/clockwork/#c:s1:r5;svgjs,Europe/Berlin,Berlin;svgjs,America/New_York,New%20York>
 will display two clocks.
 
 ## Try it out
 
 * <https://adangel.github.io/clockwork> - this will show the default clocks
-* <https://adangel.github.io/clockwork/#svgjs,Europe/Paris,Paris> - Paris
+* <https://adangel.github.io/clockwork/#c:s1:r3;svgjs,Europe/Paris,Paris> - Paris
 

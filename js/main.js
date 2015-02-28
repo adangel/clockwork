@@ -48,8 +48,14 @@ function bindEventListeners() {
         syncLocationHash();
     });
     $("#clocks-per-row").val(DEFAULT_CLOCKS_PER_ROW);
-    $("#clocks-per-row").change(resize);
-    $("#show-seconds").change(updateAll);
+    $("#clocks-per-row").change(function() {
+        resize();
+        syncLocationHash();
+    });
+    $("#show-seconds").change(function() {
+        updateAll();
+        syncLocationHash();
+    });
     $(window).on('hashchange', function() {
         parseLocationHash();
     });
@@ -115,6 +121,11 @@ function clearAllClocks() {
 function syncLocationHash() {
     var hash = "";
 
+    hash += "c";
+    hash += ":s" + ($("#show-seconds:checked").val() === "on" ? "1" : "0");
+    hash += ":r" + $("#clocks-per-row").val();
+    hash += CLOCK_DELIMITER;
+
     $('#clocks > div').each(function(index, clock) {
         hash += clock.clockstyle + DELIMITER + clock.zone + DELIMITER + clock.title;
         hash += CLOCK_DELIMITER;
@@ -140,6 +151,17 @@ function parseLocationHash() {
         inclocks = hash.split(CLOCK_ALT_DELIMITER); // for backward compatibility
     } else {
         inclocks = hash.split(CLOCK_DELIMITER);
+    }
+    if (inclocks.length > 0 && inclocks[0].substring(0, 2) === "c:") {
+        var config = inclocks[0].split(":");
+        inclocks.shift();
+        $.each(config, function(index, value) {
+            if (value.substring(0, 1) === "s") {
+                document.getElementById("show-seconds").checked = value.substring(1, 2) === "1" ? "checked" : "";
+            } else if (value.substring(0, 1) === "r") {
+                $("#clocks-per-row").val(value.substr(1));
+            }
+        });
     }
     $.each(inclocks, function(index, value) {
         var data = value.split(DELIMITER);
