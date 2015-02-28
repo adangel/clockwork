@@ -90,7 +90,9 @@ function render() {
     $.each(timezoneJS.timezone.getAllZones(), function(index, value) {
         $("#timezone-select").append("<option value='" + value + "'>" + value + "</option>");
     });
-    $("#timezone-select").selectmenu();
+    $("#timezone-select").selectmenu()
+        .selectmenu( "menuWidget" )
+            .addClass( "overflow" );
     $.each(clockwork.clocks, function(key, value) {
         var checked = key === DEFAULT_CLOCK_STYLE ? " checked='checked'" : "";
         $("#clockstyle-select").append("<option value='" + key + "'" + checked + ">" + value.label + "</option>");
