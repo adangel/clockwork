@@ -7,6 +7,7 @@ It uses:
 * svg: plain svg <http://www.w3.org/TR/SVG11/Overview.html>
 * svgjs: <http://svgjs.com/> and the example clock <http://svgjs.com/clock/>
 * jquery: <http://jquery.com/>
+* jquery-ui: <http://jqueryui.com/>
 * timezone-js: <https://github.com/mde/timezone-js>
 * the olsen timezone database: <ftp://ftp.iana.org/tz/tzdata-latest.tar.gz>
 
