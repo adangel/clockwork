@@ -28,13 +28,18 @@
 
                 return main;
 
-                function updateCurrent() {
+                function updateCurrent(showSeconds) {
                     var current = utils.getCurrentTime(zone);
-                    update(current.hours, current.minutes, current.seconds, current.additions, current.date);
+                    update(current.hours, current.minutes, current.seconds, current.additions, current.date, showSeconds);
+                    if (showSeconds !== false) {
+                        $("svg g:last-child", $(main)).css("display", "inherit");
+                    } else {
+                        $("svg g:last-child", $(main)).css("display", "none");
+                    }
                 }
-                function update(hours, minutes, seconds, additions, date) {
+                function update(hours, minutes, seconds, additions, date, showSeconds) {
                     var duration = 300;
-                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date);
+                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date, showSeconds);
                     clock.setHours(hours, minutes);
                     clock.setMinutes(minutes, duration);
                     clock.setSeconds(seconds, duration);

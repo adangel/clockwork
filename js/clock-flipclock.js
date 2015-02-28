@@ -33,9 +33,11 @@
                 $(main).resize(function() {main.setSize($(main).width());});
                 return main;
     
-                function updateCurrent() {
+                function updateCurrent(showSeconds) {
                     var current = utils.getCurrentTime(zone);
-                    flipClock.draw(current.date);
+                    flipClock.draw(current.date, showSeconds);
+                    utils.updateClockSubtitleNode(text, current.hours, current.minutes, current.seconds,
+                            current.additions, current.date, showSeconds);
                 }
             }
     };

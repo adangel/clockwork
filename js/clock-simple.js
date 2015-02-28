@@ -53,12 +53,17 @@
                 };
                 return main;
     
-                function updateCurrent() {
+                function updateCurrent(showSeconds) {
                     var current = utils.getCurrentTime(zone);
-                    update(current.hours, current.minutes, current.seconds, current.additions, current.date);
+                    update(current.hours, current.minutes, current.seconds, current.additions, current.date, showSeconds);
+                    if (showSeconds !== false) {
+                        secondHandle.style.display = "inherit";
+                    } else {
+                        secondHandle.style.display = "none";
+                    }
                 }
-                function update(hours, minutes, seconds, additions, date) {
-                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date);
+                function update(hours, minutes, seconds, additions, date, showSeconds) {
+                    utils.updateClockSubtitleNode(text, hours, minutes, seconds, additions, date, showSeconds);
                     if (hours > 12) { hours -= 12; }
                     hourHandle.setAttribute("transform", "rotate(" + (360.0/12 * (hours + minutes/60.0 + seconds/3600.0)) + ")");
                     minuteHandle.setAttribute("transform", "rotate(" + (360.0/60 * (minutes + seconds/60.0)) + ")");

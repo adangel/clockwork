@@ -49,6 +49,7 @@ function bindEventListeners() {
     });
     $("#clocks-per-row").val(DEFAULT_CLOCKS_PER_ROW);
     $("#clocks-per-row").change(resize);
+    $("#show-seconds").change(updateAll);
     $(window).on('hashchange', function() {
         parseLocationHash();
     });
@@ -62,11 +63,6 @@ function bindEventListeners() {
             }
         },
         registerRefreshInterval = function() {
-            function updateAll() {
-                $('#clocks > div').each(function(index, value) {
-                    value.update();
-                });
-            }
             updateAll();
             unregisterRefreshInterval();
             intervalId = window.setInterval(updateAll, 1000);
@@ -75,6 +71,12 @@ function bindEventListeners() {
     $(window).blur(unregisterRefreshInterval);
     // register once
     registerRefreshInterval();
+}
+function updateAll() {
+    var showSeconds = $("#show-seconds:checked").val() === "on";
+    $('#clocks > div').each(function(index, value) {
+        value.update(showSeconds);
+    });
 }
 function render() {
     $("#config-button").button();

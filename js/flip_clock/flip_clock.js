@@ -26,13 +26,12 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number;
 }
 
-function draw(in_time) {
+function draw(in_time, showSeconds) {
 	
 	var currentTime = in_time || new Date(),
 		time = pad2(currentTime.getHours()) + pad2(currentTime.getMinutes()) + pad2(currentTime.getSeconds()),
 		iDigit;
 	
-	console.log(time);
 	clearCanvas();
 
 	// Draw the HHHH digits onto the canvas
@@ -40,9 +39,11 @@ function draw(in_time) {
 		drawHHMMDigit(time, iDigit);
 	}
 	
-	// Draw scalled second digits
-	ctx.drawImage(clock_face, time.substr(4, 1) * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT, xSecondStartPos, yPositionStart + 20, secondWidth, secondHeight);
-	ctx.drawImage(clock_face, time.substr(5, 1) * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT, xSecondStartPos + secondWidth, yPositionStart + 20, secondWidth, secondHeight);
+	if (showSeconds !== false) {
+    	// Draw scalled second digits
+    	ctx.drawImage(clock_face, time.substr(4, 1) * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT, xSecondStartPos, yPositionStart + 20, secondWidth, secondHeight);
+    	ctx.drawImage(clock_face, time.substr(5, 1) * DIGIT_WIDTH, 0, DIGIT_WIDTH, DIGIT_HEIGHT, xSecondStartPos + secondWidth, yPositionStart + 20, secondWidth, secondHeight);
+	}
 }
 
 function drawHHMMDigit(time, unit) {

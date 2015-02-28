@@ -21,9 +21,9 @@
 //        text.appendChild(document.createTextNode(" (" + zoneinfo.tzOffset + ")"));
         return text;
     };
-    utils.updateClockSubtitleNode = function(spanElement, hours, minutes, seconds, additions, date) {
+    utils.updateClockSubtitleNode = function(spanElement, hours, minutes, seconds, additions, date, showSeconds) {
         //spanElement.firstChild.textContent = utils.leadingZero(hours) + ":" + utils.leadingZero(minutes) + ":" + utils.leadingZero(seconds) + additions;
-        var format = "yyyy-MM-dd HH:mm:ss";
+        var format = showSeconds !== false ? "yyyy-MM-dd HH:mm:ss" : "yyyy-MM-dd HH:mm";
         spanElement.firstChild.textContent = date.toString(format) + additions;
     };
     utils.getCurrentTime = function(zone) {
