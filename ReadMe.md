@@ -21,3 +21,6 @@ will display two clocks.
 * <https://adangel.github.io/clockwork> - this will show the default clocks
 * <https://adangel.github.io/clockwork/#c:s1:r3;svgjs,Europe/Paris,Paris> - Paris
 
+## See also
+
+* https://uhr.ptb.de/
