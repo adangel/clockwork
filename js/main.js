@@ -27,6 +27,29 @@ function initTimezoneJS() {
     timezoneJS.timezone.zoneFileBasePath = 'tzdata';
     timezoneJS.timezone.loadingScheme = timezoneJS.timezone.loadingSchemes.PRELOAD_ALL;
     timezoneJS.timezone.init({ async: false });
+    showTzDatabaseVersion();
+}
+function showTzDatabaseVersion() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "tzdata/NEWS", true);
+    xhr.onload = (e) => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let news = xhr.responseText;
+                news = news.substring(0, 200);
+                news = news.split(/\r\n|\n/);
+                const tzversion = news[2];
+                $("#footer .tz-version-info").text("tz database: " + tzversion + " | ");
+                console.log(news[2]);
+            } else {
+                console.error(xhr.statusText);
+            }
+        }
+    };
+    xhr.onerror = (e) => {
+        console.error(xhr.statusText);
+    }
+    xhr.send(null);
 }
 function bindEventListeners() {
     $("#config-button").click(function() {
