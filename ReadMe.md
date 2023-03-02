@@ -9,7 +9,7 @@ It uses:
 * jquery: <http://jquery.com/>
 * jquery-ui: <http://jqueryui.com/>
 * timezone-js: <https://github.com/mde/timezone-js>
-* the olsen timezone database: <ftp://ftp.iana.org/tz/tzdata-latest.tar.gz>
+* the olsen timezone database: <ftp://ftp.iana.org/tz/tzdata-latest.tar.gz> | <https://github.com/eggert/tz>
 * Flip Clock from <https://github.com/rheh/HTML5-canvas-projects/tree/master/flip_clock>
 
 It supports bookmarks and a simple configuration interface. E.g.:

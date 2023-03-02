@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Clockwork</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<div id="clock"></div>
+
+<script type="text/javascript">
+(function() {
+var clock = document.getElementById("clock");
+var svg = svgElement("svg", {'width':'100%', 'height':'100%', 'viewBox': '0 0 540 540'});
+clock.appendChild(svg);
+svg.appendChild(svgElement("rect", {'fill': '#fff', 'stroke':'black', 'width': 540, 'height': 540}));
+
+var clocks = [];
+clocks.push(createClock(0.5, 0, 0, +1*60, "CET (UTC+1)"));
+clocks.push(createClock(0.5, 500, 0, -5*60, "EST (UTC-5)"));
+clocks.push(createClock(0.5, 0, 500, 0, "GMT (UTC)"));
+clocks.push(createClock(0.5, 500, 500, +10*60, "AEST (UTC+10)"));
+
+for (var i = 0; i < clocks.length; i++) {
+    svg.appendChild(clocks[i]);
+}
+
+var intervalId;
+window.addEventListener('focus', function() {
+    function updateAll() {
+	    for (var i = 0; i < clocks.length; i++) {
+	        clocks[i].update();
+	    }
+    }
+
+    updateAll();
+    intervalId = window.setInterval(updateAll, 1000);
+} );
+window.addEventListener('blur', function() {
+    window.clearInterval(intervalId);
+} );
+
+
+function createClock(scale, xoffset, yoffset, timeoffset, title) {
+	var clockGroup = svgElement("g", {'transform': 'scale(' + scale + ') translate(' + xoffset + ' ' + yoffset + ')'});
+	clockGroup.appendChild(svgElement("circle", {'cx': 250, 'cy': 250, 'r': 200, 'stroke': '#000', 'stroke-width': 4, 'fill-opacity': 0}));
+	var group1 = svgElement("g", {'transform': 'translate(250,250)'});
+	for (var i = 0, j = 12; i < 360; i+= 30, j++) {
+	    group1.appendChild(svgElement("line", {'x1':0, 'y1':-150, 'x2':0, 'y2':-200, 'stroke':'black', 'stroke-width':3, 'transform':'rotate(' + i + ')'}));
+	
+	    if (j > 12) { j -= 12 };
+	    if (j >= 4 && j <= 8) {
+	        group1.appendChild(svgElement("text", {'x':0, 'y':-220, 'transform':'rotate('+ i +') rotate(180 0 -220)'}, j));
+	    } else {
+	        group1.appendChild(svgElement("text", {'x':0, 'y':-210, 'transform':'rotate('+ i +')'}, j));
+	    }
+	}
+	for (var i = 0; i < 360; i+= 6) {
+	    group1.appendChild(svgElement("line", {'x1':0, 'y1':-180, 'x2':0, 'y2':-200, 'stroke':'black', 'stroke-width':1, 'transform':'rotate(' + i + ')'}));
+	}
+	
+	var hour = svgElement("line", {'x1':0,'y1':0,'x2':0,'y2':-110,'stroke':'black','stroke-width':9});
+	group1.appendChild(hour);
+	var minute = svgElement("line", {'x1':0,'y1':0,'x2':0,'y2':-180,'stroke':'black','stroke-width':6});
+	group1.appendChild(minute);
+	var second = svgElement("line", {'x1':0,'y1':0,'x2':0,'y2':-200,'stroke':'black','stroke-width':3});
+	group1.appendChild(second);
+	
+	clockGroup.appendChild(group1);
+	
+	var text = svgElement("text", {'x':220,'y':500}, "text");
+	clockGroup.appendChild(text);
+	clockGroup.appendChild(svgElement("text", {'x':220,'y':520}, title));
+
+	updateCurrent();
+	clockGroup.update = updateCurrent;
+
+	return clockGroup;
+
+	function updateCurrent() {
+	    var originalDate = new Date(),
+	        epoche = originalDate.getTime(),
+	        timezoneoffset = originalDate.getTimezoneOffset(),
+	        additions = "";
+	    
+	    epoche += (timezoneoffset + timeoffset) * 60 * 1000;
+	    var d = new Date(epoche);
+	    if (d.getDate() > originalDate.getDate()) {
+	        additions = " (+1d)";
+	    } else if (d.getDate() < originalDate.getDate()) {
+	        additions = " (-1d)";
+	    }
+	    
+	    update(d.getHours(), d.getMinutes(), d.getSeconds(), additions);
+	}
+	function update(hours, minutes, seconds, additions) {
+	    text.firstChild.textContent = leadingZero(hours) + ":" + leadingZero(minutes) + ":" + leadingZero(seconds) + additions;
+
+	    if (hours > 12) { hours -= 12 };
+	    hour.setAttribute("transform", "rotate(" + (360.0/12 * (hours + minutes/60.0 + seconds/3600.0)) + ")");
+	    minute.setAttribute("transform", "rotate(" + (360.0/60 * (minutes + seconds/60.0)) + ")");
+	    second.setAttribute("transform", "rotate(" + (360/60 * seconds) + ")");
+	}
+	function leadingZero(n) {
+	    if (n < 10) {
+	        return "0" + n;
+	    } else {
+	        return "" + n;
+	    }
+	}
+}
+
+
+
+function svgElement(name, atts, text) {
+    var element = document.createElementNS("http://www.w3.org/2000/svg", name);
+    svgAttrs(element, atts);
+    if (text) {
+        var t = document.createTextNode(text);
+        element.appendChild(t);
+    }
+    return element;
+}
+function svgAttrs(element, atts) {
+    for (var a in atts) {
+        if (atts.hasOwnProperty(a)) {
+            element.setAttribute(a, atts[a]);
+        }
+    }
+    return element;
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+python -m SimpleHTTPServer 8082
+python3 -m http.server 8082
+
+Other styles:
+** http://www.3quarks.com/en/SVGClock/
+** http://bl.ocks.org/mbostock/10685278
+** reverse analog clock - runs backwards, counter clock wise
